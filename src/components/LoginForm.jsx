@@ -1,6 +1,10 @@
 import { Box, Button, TextField } from '@mui/material';
+import { useForm } from 'react-hook-form';
 
 export const LoginForm = () => {
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => console.log(data);
+
   return (
     <Box
       sx={{
@@ -11,16 +15,22 @@ export const LoginForm = () => {
         width: '50%',
       }}
     >
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-          <TextField variant='outlined' label='Nombre de usuario' fullWidth />
+          <TextField
+            variant='outlined'
+            label='Nombre de usuario'
+            fullWidth
+            {...register('username')}
+          />
           <TextField
             variant='outlined'
             label='Contraseña'
             type='password'
             fullWidth
+            {...register('password')}
           />
-          <Button fullWidth variant='contained'>
+          <Button type='submit' fullWidth variant='contained'>
             Login
           </Button>
         </Box>
