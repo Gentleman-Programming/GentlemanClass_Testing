@@ -22,35 +22,34 @@ const schema = yup
   .required();
 
 export const LoginForm = () => {
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [values, setValues] = useState({
+    username: '',
+    password: '',
+  });
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
     reset,
   } = useForm({
     resolver: yupResolver(schema),
+    mode: 'all',
   });
+
   const onSubmit = (data) => {
     console.log(data);
+    setValues({
+      ...data,
+    });
     reset();
   };
-
-  useEffect(() => {
-    if (Object.keys(errors).length === 0) {
-      setIsDisabled(true);
-    } else {
-      setIsDisabled(false);
-    }
-  }, [errors]);
 
   return (
     <Box
       sx={{
         bgcolor: 'grey.300',
         borderRadius: '30px',
-        height: '250px',
         p: '50px',
         width: '50%',
       }}
@@ -78,12 +77,20 @@ export const LoginForm = () => {
             type='submit'
             fullWidth
             variant='contained'
-            disabled={isDisabled}
+            disabled={!isDirty || !isValid}
           >
             Login
           </Button>
         </Box>
       </form>
+      <Box color='grey.600' mt='10px'>
+        {values.username && values.password && (
+          <>
+            <Typography>Username: {values.username}</Typography>
+            <Typography>Password: {values.password}</Typography>
+          </>
+        )}
+      </Box>
     </Box>
   );
 };
