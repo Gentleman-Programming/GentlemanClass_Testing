@@ -1,9 +1,13 @@
 import { screen, render, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { LoginForm } from '../pages';
+import axios from 'axios';
+
+jest.mock('axios');
 
 describe('LoginForm', () => {
   beforeEach(() => {
+    axios.get.mockResolvedValue({ data: { token: '123' } });
     render(<LoginForm />);
   });
 
@@ -35,15 +39,11 @@ describe('LoginForm', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(
-        screen.getByText(`Username: ${usernameValue}`)
-      ).toBeInTheDocument();
+      expect(screen.getByText(`Username: ${usernameValue}`)).toBeInTheDocument();
     });
 
     await waitFor(() => {
-      expect(
-        screen.getByText(`Password: ${passwordValue}`)
-      ).toBeInTheDocument();
+      expect(screen.getByText(`Password: ${passwordValue}`)).toBeInTheDocument();
     });
   });
 
@@ -58,17 +58,11 @@ describe('LoginForm', () => {
     await user.type(usernameField, usernameValue);
     await user.type(passwordField, passwordValue);
 
-    await waitFor(() =>
-      expect(
-        screen.getByText('Username debe ser máximo de 12 caracteres')
-      ).toBeInTheDocument()
-    );
+    await waitFor(() => expect(screen.getByText('Username debe ser máximo de 12 caracteres')).toBeInTheDocument());
 
     await waitFor(() =>
       expect(
-        screen.getByText(
-          'Password debe ser alfanumérico, y contener máximo 12 caracteres, una mayúscula y un caracter especial'
-        )
+        screen.getByText('Password debe ser alfanumérico, y contener máximo 12 caracteres, una mayúscula y un caracter especial')
       ).toBeInTheDocument()
     );
 
