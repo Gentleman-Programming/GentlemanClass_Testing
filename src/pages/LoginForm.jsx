@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { UsernameField } from '../components';
+import { PasswordField } from '../components';
+import { Button } from '../components';
 
 const schema = yup
   .object({
@@ -56,29 +59,9 @@ export const LoginForm = () => {
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <TextField
-            variant='outlined'
-            label='Nombre de usuario'
-            fullWidth
-            maxLength={12}
-            {...register('username')}
-          />
-          <Typography color='red'>{errors.username?.message}</Typography>
-          <TextField
-            variant='outlined'
-            label='Contraseña'
-            type='password'
-            fullWidth
-            maxLength={12}
-            {...register('password')}
-          />
-          <Typography color='red'>{errors.password?.message}</Typography>
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            disabled={!isDirty || !isValid}
-          >
+          <UsernameField register={register} errors={errors} />
+          <PasswordField register={register} errors={errors} />
+          <Button isDirty={isDirty} isValid={isValid} type='submit'>
             Login
           </Button>
         </Box>

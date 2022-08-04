@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { LoginForm } from './components';
+import { LoginForm } from './pages';
 import './App.css';
 
 function App() {
