@@ -41,7 +41,6 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
     setValues({
       ...data,
     });
