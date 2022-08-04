@@ -34,8 +34,17 @@ describe('LoginForm', () => {
 
     await user.click(submitButton);
 
-    expect(screen.getByText(`Username: ${usernameValue}`)).toBeInTheDocument();
-    expect(screen.getByText(`Password: ${passwordValue}`)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText(`Username: ${usernameValue}`)
+      ).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(`Password: ${passwordValue}`)
+      ).toBeInTheDocument();
+    });
   });
 
   test('should have errors message when the value of the fields are invalid', async () => {
