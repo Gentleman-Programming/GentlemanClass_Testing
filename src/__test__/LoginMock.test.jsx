@@ -1,25 +1,24 @@
 import { screen, render } from '@testing-library/react';
 import { LoginForm } from '../pages';
 
-jest.mock('../components/index.js', () => ({
+jest.mock('../components/PasswordField.jsx', () => ({
   __esModule: true,
-  default: () => <div>Mocked Username Field</div>,
+  PasswordField: () => <div>Mocked Password Field</div>
 }));
 
-jest.mock('../components', () => ({
+jest.mock('../components/UsernameField.jsx', () => ({
   __esModule: true,
-  default: () => <div>Mocked Username Field</div>,
+  UsernameField: () => <div>Mocked Username Field</div>
 }));
 
-jest.mock('../components', () => ({
+jest.mock('../components/Button.jsx', () => ({
   __esModule: true,
-  default: () => <div>Mocked Button</div>,
+  Button: () => <div>Mocked Button</div>
 }));
 
-describe('mock children components', () => {
+describe('LoginForm', () => {
   test('should mock the components', () => {
     render(<LoginForm />);
-
     screen.debug();
   });
 });
